@@ -53,7 +53,7 @@ namespace jhplanner.ViewModels
         private void AddToDoItem()
         {
             var newItemVM = new ToDoItemViewModel(new ToDoItem { Task = "새 항목", Details = "상세 설명", IsCompleted = false });
-            var editWindow = new ToDoEditWindow(newItemVM);
+            var editWindow = new ToDoEditWindow(newItemVM, "New ToDo Item");
             editWindow.Closed += (s, args) =>
             {
                 if (editWindow.IsSaved)

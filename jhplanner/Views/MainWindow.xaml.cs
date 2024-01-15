@@ -17,7 +17,8 @@ namespace jhplanner.Views
         {
             if (sender is ListView listView && listView.SelectedItem is ToDoItemViewModel selectedItemVM)
             {
-                var editWindow = new ToDoEditWindow(selectedItemVM);
+                string windowTitle = selectedItemVM.Task ?? "Edit ToDo Item";
+                var editWindow = new ToDoEditWindow(selectedItemVM, windowTitle);
                 editWindow.SaveCompleted += (s, args) =>
                 {
                     var viewModel = DataContext as MainWindowViewModel;
@@ -26,5 +27,6 @@ namespace jhplanner.Views
                 editWindow.Show();
             }
         }
+
     }
 }

@@ -7,42 +7,49 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
         <!-- 필터링 콤보박스 -->
-        <ComboBox x:Name="FilterComboBox" Grid.Row="0" Margin="10" Width="150"
-          VerticalAlignment="Top" HorizontalAlignment="Left" SelectedIndex="{Binding SelectedFilterIndex}">
+        <ComboBox x:Name="FilterComboBox" Grid.Row="0" Grid.Column="0" Margin="10" Width="150"
+                  VerticalAlignment="Top" HorizontalAlignment="Left" SelectedIndex="{Binding SelectedFilterIndex}">
             <ComboBoxItem Content="모두"/>
             <ComboBoxItem Content="완료됨"/>
             <ComboBoxItem Content="미완료"/>
         </ComboBox>
 
+        <!-- 추가 및 삭제 버튼 -->
+        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="+" FontSize="14" Width="25" Height="25"
+            Margin="0,10,5,10" Command="{Binding AddToDoCommand}" />
+            <Button Content="-" FontSize="14" Width="25" Height="25"
+            Margin="5,10,10,10" Command="{Binding RemoveToDoCommand}" CommandParameter="{Binding ElementName=ToDoList, Path=SelectedItem}" />
+        </StackPanel>
+
         <!-- ToDo 리스트 표시 -->
-        <ListView x:Name="ToDoList" Grid.Row="1" Margin="10" ItemsSource="{Binding ToDoItems}" MouseDoubleClick="ToDoList_MouseDoubleClick">
+        <ListView x:Name="ToDoList" Grid.Row="1" Grid.ColumnSpan="2" Margin="10" ItemsSource="{Binding ToDoItems}" MouseDoubleClick="ToDoList_MouseDoubleClick">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Check" Width="50">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <CheckBox IsChecked="{Binding IsCompleted}" />
+                                <CheckBox IsChecked="{Binding IsCompleted}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <GridViewColumn Header="Task" DisplayMemberBinding="{Binding Task}" Width="300"/>
-                    <GridViewColumn Header="Details" DisplayMemberBinding="{Binding Details}" Width="300"/>
+                    <GridViewColumn Header="Details" Width="300">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Details}" MaxHeight="30" TextTrimming="CharacterEllipsis" TextWrapping="Wrap"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>
-        <!-- 추가 버튼 -->
-        <Button Grid.Row="0" Content="+" FontSize="16" Width="30" Height="30"
-        Margin="0,10,45,10" HorizontalAlignment="Right" VerticalAlignment="Top"
-        Command="{Binding AddToDoCommand}" />
-
-        <!-- 삭제 버튼 -->
-        <Button Grid.Row="0" Content="-" FontSize="16" Width="30" Height="30"
-        Margin="0,10,10,10" HorizontalAlignment="Right" VerticalAlignment="Top"
-        Command="{Binding RemoveToDoCommand}" CommandParameter="{Binding ElementName=ToDoList, Path=SelectedItem}" />
-
     </Grid>
 </Window>

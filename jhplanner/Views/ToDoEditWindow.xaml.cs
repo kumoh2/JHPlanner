@@ -11,11 +11,12 @@ namespace jhplanner.Views
 
         public event EventHandler? SaveCompleted;
 
-        public ToDoEditWindow(ToDoItemViewModel itemViewModel)
+        public ToDoEditWindow(ToDoItemViewModel itemViewModel, string windowTitle = "Edit ToDo Item")
         {
             InitializeComponent();
             ItemViewModel = itemViewModel;
             DataContext = ItemViewModel;
+            this.Title = windowTitle; // 창 제목 설정
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)

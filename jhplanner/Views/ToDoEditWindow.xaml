@@ -1,10 +1,15 @@
 ﻿<Window x:Class="jhplanner.Views.ToDoEditWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Edit ToDo Item" Height="200" Width="300">
-    <StackPanel Margin="10">
-        <TextBox x:Name="TaskTextBox" Margin="0,0,0,10" Text="{Binding Task, Mode=TwoWay, UpdateSourceTrigger=Explicit}" />
-        <TextBox x:Name="DetailsTextBox" Margin="0,0,0,10" Height="100" TextWrapping="Wrap" AcceptsReturn="True" Text="{Binding Details, Mode=TwoWay, UpdateSourceTrigger=Explicit}" />
-        <Button Content="Save" HorizontalAlignment="Right" Click="SaveButton_Click"/>
-    </StackPanel>
+        Title="Edit ToDo Item" Height="600" Width="900">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <TextBox x:Name="TaskTextBox" Grid.Row="0" Margin="0,0,0,10" Text="{Binding Task, Mode=TwoWay, UpdateSourceTrigger=Explicit}" />
+        <TextBox x:Name="DetailsTextBox" Grid.Row="1" Margin="0,0,0,10" TextWrapping="Wrap" AcceptsReturn="True" Text="{Binding Details, Mode=TwoWay, UpdateSourceTrigger=Explicit}" />
+        <Button Content="Save" Grid.Row="2" HorizontalAlignment="Right" Click="SaveButton_Click"/>
+    </Grid>
 </Window>
