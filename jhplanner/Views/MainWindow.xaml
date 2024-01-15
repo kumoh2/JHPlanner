@@ -1,0 +1,52 @@
+﻿<Window x:Class="jhplanner.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="JH Planner" Height="450" Width="800">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- 필터링 콤보박스 -->
+        <ComboBox x:Name="FilterComboBox" Grid.Row="0" Margin="10" Width="150"
+          VerticalAlignment="Top" HorizontalAlignment="Left" SelectedIndex="{Binding SelectedFilterIndex}">
+            <ComboBoxItem Content="모두"/>
+            <ComboBoxItem Content="완료됨"/>
+            <ComboBoxItem Content="미완료"/>
+        </ComboBox>
+
+        <!-- ToDo 리스트 표시 -->
+        <ListView x:Name="ToDoList" Grid.Row="1" Margin="10" ItemsSource="{Binding ToDoItems}" MouseDoubleClick="ToDoList_MouseDoubleClick">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Check" Width="50">
+                        <GridViewColumn.CellTemplate>   
+                            <DataTemplate>
+                                <CheckBox IsChecked="{Binding IsCompleted}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Task" DisplayMemberBinding="{Binding Task}" Width="300"/>
+                    <GridViewColumn Header="Details" DisplayMemberBinding="{Binding Details}" Width="300"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <!-- 추가 버튼 -->
+        <Button Grid.Row="0" Content="+" FontSize="16" Width="30" Height="30"
+        Margin="0,10,45,10" HorizontalAlignment="Right" VerticalAlignment="Top"
+        Command="{Binding AddToDoCommand}" />
+
+        <!-- 삭제 버튼 -->
+        <Button Grid.Row="0" Content="-" FontSize="16" Width="30" Height="30"
+        Margin="0,10,10,10" HorizontalAlignment="Right" VerticalAlignment="Top"
+        Command="{Binding RemoveToDoCommand}" CommandParameter="{Binding ElementName=ToDoList, Path=SelectedItem}" />
+
+
+    </Grid>
+</Window>
