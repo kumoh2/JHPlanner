@@ -20,11 +20,14 @@ namespace jhplanner.Views
 
         private void ToDoList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if (sender is ListView listView && listView.SelectedItem is ToDoItem item)
+            if (sender is ListView listView && listView.SelectedItem is ToDoItem selectedItem)
             {
-                MessageBox.Show($"Task: {item.Task}\nDetails: {item.Details}", "상세 정보");
+                var editWindow = new ToDoEditWindow(selectedItem);
+                if (editWindow.ShowDialog() == true)
+                {
+                    // 데이터베이스 업데이트 및 리스트 갱신 로직
+                }
             }
-
         }
     }
 }
