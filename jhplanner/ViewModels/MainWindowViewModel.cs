@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using jhplanner.Data;
 using jhplanner.Models;
 using System.Windows;
+using jhplanner.Views;
 
 namespace jhplanner.ViewModels
 {
@@ -80,9 +81,17 @@ namespace jhplanner.ViewModels
         private void AddToDoItem()
         {
             var newItem = new ToDoItem { Task = "새 항목", Details = "상세 설명", IsCompleted = false };
-            _context.ToDoItems.Add(newItem);
-            _context.SaveChanges();
-            LoadToDoItems(); // 데이터 갱신
+            var editWindow = new ToDoEditWindow(newItem);
+            editWindow.Closed += (s, args) =>
+            {
+                if (editWindow.IsSaved)
+                {
+                    _context.ToDoItems.Add(newItem);
+                    _context.SaveChanges();
+                    LoadToDoItems(); // 데이터 갱신
+                }
+            };
+            editWindow.Show(); // 모달리스 창으로 띄우기
         }
 
         // 여기에 필터링 및 항목 추가 로직을 추가할 수 있습니다.

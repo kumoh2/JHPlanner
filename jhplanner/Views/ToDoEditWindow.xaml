@@ -3,8 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Edit ToDo Item" Height="200" Width="300">
     <StackPanel Margin="10">
-        <TextBox x:Name="TaskTextBox" Margin="0,0,0,10" Text="{Binding Task, Mode=TwoWay}" />
-        <TextBox x:Name="DetailsTextBox" Margin="0,0,0,10" Height="100" TextWrapping="Wrap" AcceptsReturn="True" Text="{Binding Details, Mode=TwoWay}" />
+        <TextBox x:Name="TaskTextBox" Margin="0,0,0,10" Text="{Binding Task, Mode=TwoWay, UpdateSourceTrigger=Explicit}" />
+        <TextBox x:Name="DetailsTextBox" Margin="0,0,0,10" Height="100" TextWrapping="Wrap" AcceptsReturn="True" Text="{Binding Details, Mode=TwoWay, UpdateSourceTrigger=Explicit}" />
         <Button Content="Save" HorizontalAlignment="Right" Click="SaveButton_Click"/>
     </StackPanel>
 </Window>

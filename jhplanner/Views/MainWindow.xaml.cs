@@ -17,17 +17,14 @@ namespace jhplanner.Views
             InitializeComponent();
             DataContext = new MainWindowViewModel();
         }
-
         private void ToDoList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (sender is ListView listView && listView.SelectedItem is ToDoItem selectedItem)
             {
                 var editWindow = new ToDoEditWindow(selectedItem);
-                if (editWindow.ShowDialog() == true)
-                {
-                    // 데이터베이스 업데이트 및 리스트 갱신 로직
-                }
+                editWindow.Show(); // 모달리스 창으로 띄우기
             }
         }
+
     }
 }
