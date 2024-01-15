@@ -12,6 +12,8 @@ namespace jhplanner.ViewModels
     public class MainWindowViewModel : ObservableObject
     {
         private int _selectedFilterIndex;
+        private readonly AppDbContext _context = new AppDbContext();
+
         public int SelectedFilterIndex
         {
             get => _selectedFilterIndex;
@@ -22,12 +24,9 @@ namespace jhplanner.ViewModels
             }
         }
 
-        private readonly AppDbContext _context = new AppDbContext();
         public ObservableCollection<ToDoItemViewModel> ToDoItems { get; } = new ObservableCollection<ToDoItemViewModel>();
-
         public RelayCommand AddToDoCommand { get; }
         public RelayCommand<ToDoItemViewModel?> RemoveToDoCommand { get; }
-
 
         public MainWindowViewModel()
         {
@@ -59,7 +58,7 @@ namespace jhplanner.ViewModels
             {
                 if (editWindow.IsSaved)
                 {
-                    _context.ToDoItems.Add(newItemVM.ToDoItem); // ToDoItemViewModel에서 ToDoItem 객체에 접근
+                    _context.ToDoItems.Add(newItemVM.ToDoItem);
                     _context.SaveChanges();
                     LoadToDoItems();
                 }
@@ -80,7 +79,6 @@ namespace jhplanner.ViewModels
         private void FilterToDoItems()
         {
             var items = _context.ToDoItems.ToList();
-
             if (SelectedFilterIndex == 1) // 완료됨
             {
                 items = items.Where(i => i.IsCompleted).ToList();
@@ -96,7 +94,5 @@ namespace jhplanner.ViewModels
                 ToDoItems.Add(new ToDoItemViewModel(item));
             }
         }
-
-        // 여기에 필터링 및 항목 추가 로직을 추가할 수 있습니다.
     }
 }

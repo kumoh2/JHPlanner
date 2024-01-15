@@ -6,10 +6,9 @@ namespace jhplanner.Views
 {
     public partial class ToDoEditWindow : Window
     {
-        public bool IsSaved { get; private set; } = false; // 저장 여부를 나타내는 플래그
+        public bool IsSaved { get; private set; } = false;
         public ToDoItemViewModel ItemViewModel { get; private set; }
 
-        // 저장 완료 이벤트를 선언합니다.
         public event EventHandler? SaveCompleted;
 
         public ToDoEditWindow(ToDoItemViewModel itemViewModel)
@@ -24,7 +23,7 @@ namespace jhplanner.Views
             UpdateBinding(TaskTextBox);
             UpdateBinding(DetailsTextBox);
             IsSaved = true;
-            SaveCompleted?.Invoke(this, EventArgs.Empty); // 이벤트 발생
+            SaveCompleted?.Invoke(this, EventArgs.Empty);
             this.Close();
         }
 

@@ -17,9 +17,9 @@ namespace jhplanner.ViewModels
             get => _item.Task;
             set
             {
-                var task = _item.Task; // 임시 변수 할당
-                SetProperty(ref task, value); // 임시 변수를 사용하여 SetProperty 호출
-                _item.Task = task; // ToDoItem의 속성 업데이트
+                var task = _item.Task;
+                SetProperty(ref task, value);
+                _item.Task = task;
             }
         }
 
@@ -44,7 +44,6 @@ namespace jhplanner.ViewModels
                 _item.IsCompleted = isCompleted;
             }
         }
-
 
         public ToDoItem ToDoItem
         {
