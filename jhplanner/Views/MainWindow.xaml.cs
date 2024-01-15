@@ -1,6 +1,4 @@
-﻿using System.Text;
-using System.Windows;
-using jhplanner.Models;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using jhplanner.ViewModels;
@@ -17,12 +15,20 @@ namespace jhplanner.Views
             InitializeComponent();
             DataContext = new MainWindowViewModel();
         }
+
+        // MainWindow.xaml.cs
         private void ToDoList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if (sender is ListView listView && listView.SelectedItem is ToDoItem selectedItem)
+            if (sender is ListView listView && listView.SelectedItem is ToDoItemViewModel selectedItemVM)
             {
-                var editWindow = new ToDoEditWindow(selectedItem);
-                editWindow.Show(); // 모달리스 창으로 띄우기
+                var editWindow = new ToDoEditWindow(selectedItemVM);
+                editWindow.SaveCompleted += (s, args) =>
+                {
+                    // ViewModel의 LoadToDoItems 메소드를 호출하여 리스트를 갱신합니다.
+                    var viewModel = DataContext as MainWindowViewModel;
+                    viewModel?.RefreshToDoItems();
+                };
+                editWindow.Show();
             }
         }
 

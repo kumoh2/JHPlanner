@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
+using System.Linq;
 using jhplanner.Data;
 using jhplanner.Models;
 using System.Windows;
@@ -10,7 +11,6 @@ namespace jhplanner.ViewModels
 {
     public class MainWindowViewModel : ObservableObject
     {
-
         private int _selectedFilterIndex;
         public int SelectedFilterIndex
         {
@@ -19,6 +19,61 @@ namespace jhplanner.ViewModels
             {
                 SetProperty(ref _selectedFilterIndex, value);
                 FilterToDoItems();
+            }
+        }
+
+        private readonly AppDbContext _context = new AppDbContext();
+        public ObservableCollection<ToDoItemViewModel> ToDoItems { get; } = new ObservableCollection<ToDoItemViewModel>();
+
+        public RelayCommand AddToDoCommand { get; }
+        public RelayCommand<ToDoItemViewModel?> RemoveToDoCommand { get; }
+
+
+        public MainWindowViewModel()
+        {
+            LoadToDoItems();
+            AddToDoCommand = new RelayCommand(AddToDoItem);
+            RemoveToDoCommand = new RelayCommand<ToDoItemViewModel?>(RemoveToDoItem);
+        }
+
+        private void LoadToDoItems()
+        {
+            var items = _context.ToDoItems.ToList();
+            ToDoItems.Clear();
+            foreach (var item in items)
+            {
+                ToDoItems.Add(new ToDoItemViewModel(item));
+            }
+        }
+
+        public void RefreshToDoItems()
+        {
+            LoadToDoItems();
+        }
+
+        private void AddToDoItem()
+        {
+            var newItemVM = new ToDoItemViewModel(new ToDoItem { Task = "새 항목", Details = "상세 설명", IsCompleted = false });
+            var editWindow = new ToDoEditWindow(newItemVM);
+            editWindow.Closed += (s, args) =>
+            {
+                if (editWindow.IsSaved)
+                {
+                    _context.ToDoItems.Add(newItemVM.ToDoItem); // ToDoItemViewModel에서 ToDoItem 객체에 접근
+                    _context.SaveChanges();
+                    LoadToDoItems();
+                }
+            };
+            editWindow.Show();
+        }
+
+        private void RemoveToDoItem(ToDoItemViewModel? itemVM)
+        {
+            if (itemVM != null && MessageBox.Show("진짜 지우겠습니까?", "확인", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                _context.ToDoItems.Remove(itemVM.ToDoItem);
+                _context.SaveChanges();
+                LoadToDoItems();
             }
         }
 
@@ -38,60 +93,8 @@ namespace jhplanner.ViewModels
             ToDoItems.Clear();
             foreach (var item in items)
             {
-                ToDoItems.Add(item);
+                ToDoItems.Add(new ToDoItemViewModel(item));
             }
-        }
-
-        private readonly AppDbContext _context = new AppDbContext();
-        public ObservableCollection<ToDoItem> ToDoItems { get; } = new ObservableCollection<ToDoItem>();
-
-        // 새 ToDo 항목 추가 제거 커맨드
-        public RelayCommand AddToDoCommand { get; }
-        public RelayCommand<ToDoItem> RemoveToDoCommand { get; }
-
-        public MainWindowViewModel()
-        {
-            LoadToDoItems();
-
-            AddToDoCommand = new RelayCommand(AddToDoItem);
-            RemoveToDoCommand = new RelayCommand<ToDoItem>(RemoveToDoItem);
-
-        }
-
-        private void RemoveToDoItem(ToDoItem? item)
-        {
-            if (item != null && MessageBox.Show("진짜 지우겠습니까?", "확인", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-            {
-                _context.ToDoItems.Remove(item);
-                _context.SaveChanges();
-                LoadToDoItems();
-            }
-        }
-
-        private void LoadToDoItems()
-        {
-            var items = _context.ToDoItems.ToList();
-            ToDoItems.Clear();
-            foreach (var item in items)
-            {
-                ToDoItems.Add(item);
-            }
-        }
-
-        private void AddToDoItem()
-        {
-            var newItem = new ToDoItem { Task = "새 항목", Details = "상세 설명", IsCompleted = false };
-            var editWindow = new ToDoEditWindow(newItem);
-            editWindow.Closed += (s, args) =>
-            {
-                if (editWindow.IsSaved)
-                {
-                    _context.ToDoItems.Add(newItem);
-                    _context.SaveChanges();
-                    LoadToDoItems(); // 데이터 갱신
-                }
-            };
-            editWindow.Show(); // 모달리스 창으로 띄우기
         }
 
         // 여기에 필터링 및 항목 추가 로직을 추가할 수 있습니다.
