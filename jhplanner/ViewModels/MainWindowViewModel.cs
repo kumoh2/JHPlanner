@@ -43,6 +43,7 @@ namespace jhplanner.ViewModels
             {
                 ToDoItems.Add(new ToDoItemViewModel(item));
             }
+            FilterToDoItems();
         }
 
         public void RefreshToDoItems()
