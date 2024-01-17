@@ -20,7 +20,7 @@ jobs:
         dotnet-version: '8.x.x'
 
     - name: Setup MSBuild
-      uses: microsoft/setup-msbuild@v1.x.x
+      uses: microsoft/setup-msbuild@v1.3.x
 
     - name: Restore dependencies
       run: dotnet restore ${{env.Solution_Name}} --runtime win-x64
