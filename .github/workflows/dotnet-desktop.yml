@@ -79,7 +79,7 @@ jobs:
 
     # Execute all unit tests in the solution
     - name: Execute unit tests
-      run: dotnet test
+      run: dotnet test ${{ env.Test_Project_Path }}
 
     # Restore the application to populate the obj folder with RuntimeIdentifiers
     - name: Restore the application
@@ -106,15 +106,21 @@ jobs:
     # Remove the pfx
     #- name: Remove the pfx
     #  run: Remove-Item -path $env:Wap_Project_Directory\GitHubActionsWorkflow.pfx
-   
+    
     - name: Build the application
-      run: msbuild $env:Solution_Name /t:Build /p:Configuration=$env:Configuration
+      run: msbuild ${{ env.Solution_Name }} /t:Build /p:Configuration=${{ matrix.configuration }},Platform="Any CPU",RuntimeIdentifier=win-x64,PublishSingleFile=true,PublishReadyToRun=true
 
     - name: Upload EXE file
       uses: actions/upload-artifact@v3
       with:
         name: EXE Package
-        path: $env:Solution_Name\bin\$env:Configuration\net5.0\publish   # Update the path based on your project structure
+        path: .\jhplanner\bin\${{ matrix.configuration }}\net8.0-windows10.0.22621.0\win-x64\publish
+
+    #- name: Upload EXE file
+    #  uses: actions/upload-artifact@v3
+    #  with:
+    #    name: EXE Package
+    #    path: $env:Solution_Name\bin\$env:Configuration\net5.0\publish   # Update the path based on your project structure
 
     # Upload the MSIX package: https://github.com/marketplace/actions/upload-a-build-artifact
     #- name: Upload build artifacts
