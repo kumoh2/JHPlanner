@@ -29,7 +29,7 @@ jobs:
       run: dotnet build ${{env.Solution_Name}} --configuration Release --framework net8.0-windows10.0.22621.0 --output ./Publish
 
     - name: Publish
-      run: dotnet publish jhplanner\jhplanner.csproj --configuration Release --framework net8.0-windows10.0.22621.0 --runtime win-x64 --self-contained false -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true -p:PublishTrimmed=True -p:TrimMode=Link --output ./Publish
+      run: dotnet publish jhplanner\jhplanner.csproj --configuration Release --framework net8.0-windows10.0.22621.0 --runtime win-x64 --self-contained false -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true --output ./Publish
 
     - name: Upload Artifacts
       uses: actions/upload-artifact@v3
