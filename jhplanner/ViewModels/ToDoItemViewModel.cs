@@ -12,6 +12,18 @@ namespace jhplanner.ViewModels
             _item = item;
         }
 
+
+        public string? DocumentNumber
+        {
+            get => _item.DocumentNumber;
+            set
+            {
+                var documentNumber = _item.DocumentNumber;
+                SetProperty(ref documentNumber, value);
+                _item.DocumentNumber = documentNumber;
+            }
+        }
+
         public string? Task
         {
             get => _item.Task;
