@@ -1,6 +1,5 @@
-﻿using jhplanner.Data;
-using Microsoft.EntityFrameworkCore;
-using System.Windows;
+﻿using System.Windows;
+using jhplanner.Data; // 데이터 컨텍스트의 네임스페이스를 임포트
 
 namespace jhplanner
 {
@@ -10,13 +9,14 @@ namespace jhplanner
         {
             base.OnStartup(e);
 
+            // 데이터베이스 초기화
             using (var context = new AppDbContext())
             {
-                // 데이터베이스 마이그레이션 적용
-                context.Database.Migrate();
+                // 데이터베이스가 없으면 생성
+                context.Database.EnsureCreated();
             }
 
-            // 나머지 초기화 코드...
+            // 기타 애플리케이션 초기화 코드...
         }
     }
 }
