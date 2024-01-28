@@ -24,6 +24,9 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-nuget-
 
+    - name: Install Windows App SDK
+       run: nuget install Microsoft.WindowsAppSDK
+
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v3
       with:
