@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "jhplanner (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "jhplanner (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

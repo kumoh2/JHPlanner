@@ -1,13 +1,18 @@
-﻿using System.Windows;
-using jhplanner.Data; // 데이터 컨텍스트의 네임스페이스를 임포트
+﻿using jhplanner.Data;
+using Microsoft.UI.Xaml;
+
 
 namespace jhplanner
 {
     public partial class App : Application
     {
-        protected override void OnStartup(StartupEventArgs e)
+        public App()
         {
-            base.OnStartup(e);
+            this.InitializeComponent();
+        }
+        protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
+        {
+            base.OnLaunched(args);
 
             // 데이터베이스 초기화
             using (var context = new AppDbContext())
@@ -15,8 +20,10 @@ namespace jhplanner
                 // 데이터베이스가 없으면 생성
                 context.Database.EnsureCreated();
             }
-
-            // 기타 애플리케이션 초기화 코드...
+            m_window = new Views.MainWindow();
+            m_window.Activate();
         }
+
+        private Window m_window;
     }
 }
