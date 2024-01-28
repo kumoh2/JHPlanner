@@ -17,7 +17,8 @@
 
         <!-- 필터링 콤보박스 -->
         <ComboBox x:Name="FilterComboBox" Grid.Row="0" Grid.Column="0" Margin="10" Width="150"
-                      VerticalAlignment="Top" HorizontalAlignment="Left" SelectedIndex="{Binding SelectedFilterIndex, Mode=TwoWay}">
+          VerticalAlignment="Top" HorizontalAlignment="Left"
+          SelectedIndex="{x:Bind ViewModel.SelectedFilterIndex, Mode=TwoWay}">
             <ComboBoxItem Content="모두"/>
             <ComboBoxItem Content="완료됨"/>
             <ComboBoxItem Content="미완료"/>
@@ -28,6 +29,8 @@
             <Button Content="+" Margin="5,10,2,10" Command="{x:Bind ViewModel.AddToDoCommand}" />
             <Button Content="-" Margin="2,10,10,10" 
                         Command="{x:Bind ViewModel.RemoveToDoCommand}" CommandParameter="{Binding ElementName=ToDoDataGrid, Path=SelectedItem}" />
+            <Button Content="상세보기" Margin="2,10,10,10" 
+                        Command="{x:Bind ViewModel.OpenDetailCommand}" CommandParameter="{Binding ElementName=ToDoDataGrid, Path=SelectedItem}" />
         </StackPanel>
 
         <!-- ToDo 리스트 표시 -->
@@ -35,16 +38,6 @@
                        ItemsSource="{x:Bind ViewModel.ToDoItems, Mode=OneWay}"
                        AutoGenerateColumns="False">
             <controls:DataGrid.Columns>
-                <!--Detail 열기 버튼-->
-                <controls:DataGridTemplateColumn Width="Auto">
-                    <controls:DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <StackPanel>
-                                <Button Content="열기" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </controls:DataGridTemplateColumn.CellTemplate>
-                </controls:DataGridTemplateColumn>
                 <!--Is Completed 컬럼-->
                 <controls:DataGridTemplateColumn Header="StateId" Width="100">
                     <controls:DataGridTemplateColumn.CellTemplate>
@@ -65,6 +58,15 @@
                             <TextBox Text="{Binding Task, Mode=TwoWay}" />
                         </DataTemplate>
                     </controls:DataGridTemplateColumn.CellEditingTemplate>
+                </controls:DataGridTemplateColumn>
+                <!--Detail 컬럼-->
+                <controls:DataGridTemplateColumn Header="Detail" Width="*">
+                    <controls:DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Details}" TextWrapping="NoWrap" />
+                        </DataTemplate>
+                    </controls:DataGridTemplateColumn.CellTemplate>
+                    <!-- CellEditingTemplate는 정의하지 않음 -->
                 </controls:DataGridTemplateColumn>
             </controls:DataGrid.Columns>
         </controls:DataGrid>
