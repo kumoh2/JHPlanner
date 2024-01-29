@@ -36,7 +36,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" Text="내용:" VerticalAlignment="Center" Margin="0,0,10,0"/>
-            <TextBox Grid.Column="1" Margin="0,0,0,10"
+            <RichEditBox Grid.Column="1" Margin="0,0,0,10"
                      Text="{x:Bind ViewModel.Item.Details, Mode=TwoWay}" AcceptsReturn="True" TextWrapping="Wrap"/>
         </Grid>
 
