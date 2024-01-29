@@ -1,4 +1,5 @@
 ﻿using jhplanner.Data;
+using jhplanner.Views;
 using Microsoft.UI.Xaml;
 
 
@@ -6,6 +7,7 @@ namespace jhplanner
 {
     public partial class App : Application
     {
+        public static MainWindow MainWindowInstance { get; set; }
         public App()
         {
             this.InitializeComponent();
@@ -20,10 +22,18 @@ namespace jhplanner
                 // 데이터베이스가 없으면 생성
                 context.Database.EnsureCreated();
             }
-            m_window = new Views.MainWindow();
-            m_window.Activate();
+
+            if (MainWindowInstance == null)
+            {
+                MainWindowInstance = new MainWindow();
+            }
+            MainWindowInstance.Activate();
         }
 
-        private Window m_window;
+        public static void CloseMainWindow()
+        {
+            MainWindowInstance?.Close();
+            MainWindowInstance = null;
+        }
     }
 }

@@ -63,7 +63,8 @@
                 <controls:DataGridTemplateColumn Header="Detail" Width="*">
                     <controls:DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Details}" TextWrapping="NoWrap" />
+                            <TextBlock Text="{Binding Details}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"
+                       DoubleTapped="DetailTextBlock_DoubleTapped" MaxHeight="30"/>
                         </DataTemplate>
                     </controls:DataGridTemplateColumn.CellTemplate>
                     <!-- CellEditingTemplate는 정의하지 않음 -->
