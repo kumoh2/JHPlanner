@@ -88,11 +88,26 @@ namespace jhplanner.ViewModels
 
         public async void RemoveToDoItem(ToDoItem item)
         {
-            if (item != null)
+             if (item != null)
             {
-                _context.ToDoItem.Remove(item);
-                await _context.SaveChangesAsync();
-                ToDoItems.Remove(item);
+                // 사용자에게 삭제 확인 요청
+                ContentDialog deleteDialog = new ContentDialog
+                {
+                    Title = "항목 삭제 확인",
+                    Content = $"{item.Task} 작업을 삭제하시겠습니까?",
+                    PrimaryButtonText = "삭제",
+                    CloseButtonText = "취소"
+                };
+        
+                ContentDialogResult result = await deleteDialog.ShowAsync();
+        
+                // 사용자가 '삭제'를 선택한 경우에만 항목 삭제
+                if (result == ContentDialogResult.Primary)
+                {
+                    _context.ToDoItem.Remove(item);
+                    await _context.SaveChangesAsync();
+                    ToDoItems.Remove(item);
+                }
             }
         }
 
