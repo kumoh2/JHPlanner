@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using jhplanner.Views;
 using Microsoft.EntityFrameworkCore;
 using CommunityToolkit.WinUI;
+using Microsoft.UI.Xaml.Controls;
 
 namespace jhplanner.ViewModels
 {
