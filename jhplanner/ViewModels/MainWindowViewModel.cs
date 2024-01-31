@@ -82,6 +82,8 @@ namespace jhplanner.ViewModels
         public async void AddToDoItem()
         {
             var newItem = new ToDoItem { Task = "새 항목", Details = "", StateId = false };
+            // 새로 생성된 ToDoItem에 PropertyChanged 이벤트 핸들러 추가
+            newItem.PropertyChanged += ToDoItem_PropertyChanged;
             _context.ToDoItem.Add(newItem);
             await _context.SaveChangesAsync();
             ToDoItems.Add(newItem);
