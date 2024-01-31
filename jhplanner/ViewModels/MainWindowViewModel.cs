@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using jhplanner.Views;
 using Microsoft.EntityFrameworkCore;
 using CommunityToolkit.WinUI;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml;
 
 namespace jhplanner.ViewModels
 {
@@ -88,25 +90,31 @@ namespace jhplanner.ViewModels
 
         public async void RemoveToDoItem(ToDoItem item)
         {
-             if (item != null)
+            if (item != null)
             {
-                // 사용자에게 삭제 확인 요청
-                ContentDialog deleteDialog = new ContentDialog
+                // Application의 메인 윈도우에서 XamlRoot를 가져옵니다.
+                var mainXamlRoot = App.MainWindowInstance.Content.XamlRoot;
+
+                if (mainXamlRoot != null)
                 {
-                    Title = "항목 삭제 확인",
-                    Content = $"{item.Task} 작업을 삭제하시겠습니까?",
-                    PrimaryButtonText = "삭제",
-                    CloseButtonText = "취소"
-                };
-        
-                ContentDialogResult result = await deleteDialog.ShowAsync();
-        
-                // 사용자가 '삭제'를 선택한 경우에만 항목 삭제
-                if (result == ContentDialogResult.Primary)
-                {
-                    _context.ToDoItem.Remove(item);
-                    await _context.SaveChangesAsync();
-                    ToDoItems.Remove(item);
+                    ContentDialog deleteDialog = new ContentDialog
+                    {
+                        Title = "항목 삭제 확인",
+                        Content = $"{item.Task} 작업을 삭제하시겠습니까?",
+                        PrimaryButtonText = "삭제",
+                        CloseButtonText = "취소",
+                        XamlRoot = mainXamlRoot // 메인 윈도우의 XamlRoot를 사용합니다.
+                    };
+
+                    var result = await deleteDialog.ShowAsync();
+
+                    // 사용자가 '삭제'를 선택한 경우에만 항목 삭제
+                    if (result == ContentDialogResult.Primary)
+                    {
+                        _context.ToDoItem.Remove(item);
+                        await _context.SaveChangesAsync();
+                        ToDoItems.Remove(item);
+                    }
                 }
             }
         }
