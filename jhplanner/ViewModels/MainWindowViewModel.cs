@@ -124,13 +124,15 @@ namespace jhplanner.ViewModels
         // DetailWindow 인스턴스를 관리하기 위한 Dictionary
         public static Dictionary<int, DetailWindow> DetailWindows = new Dictionary<int, DetailWindow>();
 
-        public void OpenDetail(ToDoItem item)
+        public async void OpenDetail(ToDoItem item)
         {
             if (item != null)
             {
                 // 이미 열려 있는 DetailWindow가 있는지 확인
                 if (DetailWindows.ContainsKey(item.Id))
                 {
+                    // for mouse doubleclick event
+                    await Task.Delay(150); // ms
                     // 이미 열려 있는 DetailWindow를 활성화
                     DetailWindows[item.Id].Activate();
                 }
@@ -139,6 +141,7 @@ namespace jhplanner.ViewModels
                     // 새 DetailWindow를 생성하고 Dictionary에 추가
                     var detailWindow = new DetailWindow(item.Id);
                     DetailWindows.Add(item.Id, detailWindow);
+                    DetailWindows[item.Id].Title = item.Task;
 
                     // DetailWindow가 닫힐 때 Dictionary에서 제거하는 이벤트 핸들러 추가
                     detailWindow.Closed += (sender, e) =>
@@ -146,8 +149,9 @@ namespace jhplanner.ViewModels
                         DetailWindows.Remove(item.Id);
                     };
 
-                    // 활성화를 동기적으로 처리
-                    detailWindow.DispatcherQueue.TryEnqueue(() => detailWindow.Activate());
+                    // for mouse doubleclick event
+                    await Task.Delay(150); // ms
+                    detailWindow.Activate();
                 }
             }
         }
