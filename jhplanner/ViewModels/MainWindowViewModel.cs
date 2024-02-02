@@ -37,7 +37,7 @@ namespace jhplanner.ViewModels
         {
             _context = new AppDbContext();
             ToDoItems = new ObservableCollection<ToDoItem>(); // 초기화 추가
-            SelectedFilterIndex = 0; // 콤보박스의 기본값을 "모두"로 설정
+            SelectedFilterIndex = 2; // 콤보박스의 기본값을 "모두"로 설정
             LoadToDoItems();
             AddToDoCommand = new RelayCommand(AddToDoItem);
             RemoveToDoCommand = new RelayCommand<ToDoItem>(RemoveToDoItem);

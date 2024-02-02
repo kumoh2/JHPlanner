@@ -47,7 +47,7 @@
                     </controls:DataGridTemplateColumn.CellTemplate>
                 </controls:DataGridTemplateColumn>
                 <!--Task 컬럼-->
-                <controls:DataGridTemplateColumn Header="Task" Width="200">
+                <controls:DataGridTemplateColumn Header="Task" Width="500">
                     <controls:DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Task, Mode=TwoWay}" />
