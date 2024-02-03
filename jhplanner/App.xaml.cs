@@ -1,5 +1,6 @@
 ﻿using jhplanner.Data;
 using jhplanner.Views;
+using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 
 
@@ -27,6 +28,7 @@ namespace jhplanner
             {
                 MainWindowInstance = new MainWindow();
             }
+            MainWindowInstance.AppWindow.SetPresenter(AppWindowPresenterKind.FullScreen);
             MainWindowInstance.Activate();
         }
 

@@ -5,6 +5,7 @@ using jhplanner.Data;
 using jhplanner.Models;
 using jhplanner.ViewModels;
 using jhplanner.Views;
+using Microsoft.UI.Windowing;
 using System;
 using System.Threading.Tasks;
 using Windows.Devices.AllJoyn;
@@ -49,6 +50,7 @@ public class DetailWindowViewModel : ObservableObject
 
             // 새로운 메인 윈도우를 엽니다
             App.MainWindowInstance = new MainWindow();
+            App.MainWindowInstance.AppWindow.SetPresenter(AppWindowPresenterKind.FullScreen);
             App.MainWindowInstance.Activate();
             CloseAction?.Invoke(); // 저장 후 창을 닫습니다.
         }
