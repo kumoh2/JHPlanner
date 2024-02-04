@@ -1,16 +1,11 @@
 ﻿using System.Collections.ObjectModel;
-using System.Linq;
 using jhplanner.Data;
 using jhplanner.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.ComponentModel;
-using System.Threading.Tasks;
 using jhplanner.Views;
-using Microsoft.EntityFrameworkCore;
-using CommunityToolkit.WinUI;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml;
 
 namespace jhplanner.ViewModels
 {

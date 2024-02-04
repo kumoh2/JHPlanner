@@ -28,7 +28,7 @@ namespace jhplanner
             {
                 MainWindowInstance = new MainWindow();
             }
-            MainWindowInstance.AppWindow.SetPresenter(AppWindowPresenterKind.FullScreen);
+            //MainWindowInstance.AppWindow.SetPresenter(AppWindowPresenterKind.FullScreen);
             MainWindowInstance.Activate();
         }
 
