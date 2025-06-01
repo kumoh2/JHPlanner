@@ -14,10 +14,10 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       
     - name: Cache .NET Core dependencies
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: ~/.nuget/packages
         key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
@@ -25,12 +25,12 @@ jobs:
           ${{ runner.os }}-nuget-
 
     - name: Setup .NET Core
-      uses: actions/setup-dotnet@v3
+      uses: actions/setup-dotnet@v4
       with:
         dotnet-version: '8.x.x'
 
     - name: Setup MSBuild
-      uses: microsoft/setup-msbuild@v2
+      uses: microsoft/setup-msbuild@v4
 
     - name: Restore dependencies
       run: dotnet restore ${{env.Solution_Name}} --runtime win-x64
@@ -48,7 +48,7 @@ jobs:
       run: dotnet publish jhplanner\jhplanner.csproj --configuration Release --framework net8.0-windows10.0.22621.0 --runtime win-x64 --self-contained false -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:EnableMsixTooling=true -p:IncludeNativeLibrariesForSelfExtract=true -p:WindowsAppSDKSelfContained=false --output ./Publish
 
     - name: Upload Artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: Published App
         path: ./Publish
